@@ -47,6 +47,7 @@ public class RBI {
             else if(balance<amount)
             {
                 System.out.println("You cannot withdraw money as your current balance is less than amount you are withdrawing");
+                return;
             }
             balance=balance-amount;
             if(withDrawCount>=3)
