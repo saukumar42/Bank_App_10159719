@@ -1,13 +1,33 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Customer {
     String customerName, customerEmail, customerAddress, customerGender, customerAadhar, customerPhone;
-    float balance;
+
+    int withDrawCount=0;
+
+    double balance;
 
     BufferedReader buff;
     InputStreamReader isr;
     public Customer() {
+        if(isr == null)
+            isr = new InputStreamReader(System.in);
+        if(buff==null)
+            buff = new BufferedReader(isr);
+        System.out.println("Enter customer name, customer email, customer address, customer gender, customer aadhar, customer phone");
+
+        try {
+            customerName = buff.readLine();
+            customerEmail=buff.readLine();
+            customerAddress=buff.readLine();
+            customerGender=buff.readLine();
+            customerAadhar=buff.readLine();
+            customerPhone=buff.readLine();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -69,11 +89,13 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
+    public void setBalance(double amount) {
+        balance=amount;
+
+
     }
 }
