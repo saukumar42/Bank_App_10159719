@@ -1,13 +1,17 @@
+import java.util.HashMap;
+
 interface RBII{
     final int loan_roi_percent=1;
     final int credit_card_roi_percent=2;
 
+    public void createBankAccount();
     public void depositMoney(Customer c);
     public void withdrawMoney(Customer c);
     public void openFD(float amount,int years);
     public void applyLoan(Customer c,float amount,int loanYears);
     public void applyCreditCard(Customer c);
     public double getBalance();
+    public  HashMap<String,Customer> getAccountsMap();
 
 }
 

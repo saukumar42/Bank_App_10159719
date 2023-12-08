@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Customer {
-    String customerName, customerEmail, customerAddress, customerGender, customerAadhar, customerPhone;
+    String customerName, customerEmail, customerAddress, customerGender, customerAadhar, customerPhone,customerAccountNumber;
 
     int withDrawCount=0;
 
@@ -11,7 +11,7 @@ public class Customer {
 
     BufferedReader buff;
     InputStreamReader isr;
-    public Customer() {
+    public Customer(String bankName) {
         if(isr == null)
             isr = new InputStreamReader(System.in);
         if(buff==null)
@@ -25,9 +25,12 @@ public class Customer {
             customerGender=buff.readLine();
             customerAadhar=buff.readLine();
             customerPhone=buff.readLine();
+            this.customerAccountNumber=bankName+"_"+customerAadhar;
         }catch(IOException e) {
             e.printStackTrace();
         }
+//        customerAccountNumber=bankName+"_"+customerAadhar;
+
 
     }
 
@@ -98,4 +101,9 @@ public class Customer {
 
 
     }
+    public String getAccountNumber()
+    {
+        return this.customerAccountNumber;
+    }
+
 }

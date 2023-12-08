@@ -1,9 +1,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 public class IDFC implements RBII{
     final double minBalance=15000;
+
+    HashMap<String,Customer> accountsMap=new HashMap<String,Customer>();
 
     double[] loanRois =new double[]{6.2,8,8.5,12};
     double fdRoi=7.6;
@@ -12,6 +15,21 @@ public class IDFC implements RBII{
 
     BufferedReader buff;
     InputStreamReader isr;
+
+    public void createBankAccount()
+    {
+
+        Customer cust=new Customer("IDFC");
+        if(accountsMap.get(cust.getAccountNumber())!=null)
+        {
+            System.out.println("There already exists one account number with this aadhar number!");
+            cust=null;
+            return;
+        }
+
+        accountsMap.put(cust.getAccountNumber(),cust);
+        System.out.println("Your Axis bank account has been successfull created");
+    }
 
     public void depositMoney(Customer c) {
         System.out.println("Enter the amount to be deposited");
@@ -103,5 +121,9 @@ public class IDFC implements RBII{
     }
     public double getBalance() {
         return 0.0d;
+    }
+    public HashMap<String,Customer> getAccountsMap()
+    {
+        return accountsMap;
     }
 }
