@@ -7,6 +7,7 @@ public class AXIS implements RBII{
     final double minBalance=9000;
 
     HashMap<String,Customer>accountsMap=new HashMap<String,Customer>();
+
      double[] loanRois =new double[]{5,7,9,11};
      double fdRoi=8.5;
 
@@ -22,10 +23,11 @@ public class AXIS implements RBII{
         if(buff==null)
             buff = new BufferedReader(isr);
     }
-    public void createBankAccount()
+    public void createBankAccount(HashSet<Customer>customersAuthenticated)
     {
 
         Customer cust=new Customer("AXIS");
+
         if(accountsMap.get(cust.getAccountNumber())!=null)
         {
             System.out.println("There already exists one account number with this aadhar number!");
@@ -35,6 +37,7 @@ public class AXIS implements RBII{
 
         accountsMap.put(cust.getAccountNumber(),cust);
         System.out.println("Your Axis bank account has been successfull created");
+        customersAuthenticated.add(cust);
     }
     public void depositMoney(Customer c) {
         System.out.println("Enter the amount to be deposited");

@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class IDFC implements RBII{
     final double minBalance=15000;
@@ -16,7 +17,7 @@ public class IDFC implements RBII{
     BufferedReader buff;
     InputStreamReader isr;
 
-    public void createBankAccount()
+    public void createBankAccount(HashSet<Customer> customersAuthenticated)
     {
 
         Customer cust=new Customer("IDFC");
@@ -29,6 +30,7 @@ public class IDFC implements RBII{
 
         accountsMap.put(cust.getAccountNumber(),cust);
         System.out.println("Your Axis bank account has been successfull created");
+        customersAuthenticated.add(cust);
     }
 
     public void depositMoney(Customer c) {

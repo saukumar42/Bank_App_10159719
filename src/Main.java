@@ -10,11 +10,17 @@ public class Main {
 
 
 
-    SBI sbiRBI=new SBI();
+
 
     static String [] bankNames={"ICICI","HDFC","SBI","AXIS","IDFC"};
     static String [] bankOperations={"Deposit","Withdrawal","OpenFD","Apply Loan","Apply Credit Card","Create Bank Account"};
     static List<RBII> bankList;
+    static HashSet<Customer>customersAuthenticated;
+
+    static String toString(Customer c)
+    {
+        return c.getCustomerName()+"      "+c.getAccountNumber();
+    }
     public Main() {
         if(isr == null)
             isr = new InputStreamReader(System.in);
@@ -28,6 +34,10 @@ public class Main {
             bankList.add(new AXIS());
             bankList.add(new IDFC());
         }
+        if(customersAuthenticated==null)
+        {
+            customersAuthenticated=new HashSet<Customer>();
+        }
 
     }
 
@@ -38,13 +48,14 @@ public class Main {
 
         Customer cust=null;
 
-        System.out.println("Please enter your "+bankNames[obj.selectedBank-1]+" bank account number!");
+        System.out.println("Please enter your "+bankNames[obj.selectedBank-1]+" bank account number or enter any text to continue!");
         String acc_no="";
         try {
              acc_no = obj.buff.readLine();
               RBII mRBI = bankList.get(obj.selectedBank-1);
               if(mRBI.getAccountsMap().get(acc_no)!=null)
-                  return cust=mRBI.getAccountsMap().get(acc_no);
+                   cust=mRBI.getAccountsMap().get(acc_no);
+                   customersAuthenticated.add(cust);
               return cust;
         }catch (IOException e) {
             e.printStackTrace();
@@ -54,7 +65,7 @@ public class Main {
 
     }
 
-     static void utilBankOperation(int bankOperation,int selectedBank,Main obj,Customer c,Object []banksObjectArray)
+     static void utilBankOperation(int bankOperation,int selectedBank,Main obj,Customer c)
     {
         RBII mRBI = bankList.get(selectedBank-1);
         switch(bankOperation)
@@ -94,14 +105,14 @@ public class Main {
             case 5:
                 mRBI.applyCreditCard(c);
                 break;
-            case 6:mRBI.createBankAccount();
+            case 6:mRBI.createBankAccount(customersAuthenticated);
             break;
         }
     }
     public static  void main(String[] args) {
 
         Main obj = new Main();
-        Object[] banksObjectArray={new ICICI(),new HDFC(),new SBI(),new AXIS(),new IDFC()};
+
 
 
 
@@ -128,7 +139,7 @@ public class Main {
                     e.printStackTrace();
                 }
                 if(choice==6)
-                utilBankOperation(6,obj.selectedBank,obj,cust,banksObjectArray);
+                utilBankOperation(6,obj.selectedBank,obj,cust);
                 else
                 System.out.println("Invalid choice entered!");
 
@@ -152,23 +163,23 @@ public class Main {
 
                 switch (obj.selectedOperation) {
                     case 1:
-                        utilBankOperation(1, obj.selectedBank, obj, cust,banksObjectArray);
+                        utilBankOperation(1, obj.selectedBank, obj, cust);
 
                         break;
                     case 2:
-                        utilBankOperation(2, obj.selectedBank, obj, cust,banksObjectArray);
+                        utilBankOperation(2, obj.selectedBank, obj, cust);
                         break;
                     case 3:
-                        utilBankOperation(3, obj.selectedBank, obj, cust,banksObjectArray);
+                        utilBankOperation(3, obj.selectedBank, obj, cust);
                         break;
                     case 4:
-                        utilBankOperation(4, obj.selectedBank, obj, cust,banksObjectArray);
+                        utilBankOperation(4, obj.selectedBank, obj, cust);
                         break;
                     case 5:
-                        utilBankOperation(5, obj.selectedBank, obj, cust,banksObjectArray);
+                        utilBankOperation(5, obj.selectedBank, obj, cust);
                         break;
                     case 6:
-                        utilBankOperation(6,obj.selectedBank,obj,cust,banksObjectArray);
+                        utilBankOperation(6,obj.selectedBank,obj,cust);
                     default:
                         System.out.println("Please enter valid bank operation!");
                 }
@@ -180,6 +191,26 @@ public class Main {
                     e.printStackTrace();
                 }
             }
+            System.out.println("Enter N to quit the CLI");
+            try {
+                String query = obj.buff.readLine();
+                if(query.equalsIgnoreCase("N"))
+                    break;
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        System.out.println("The users authenticated in the last session are as follows with their corresponding names and account numbers:");
+        Iterator itr=customersAuthenticated.iterator();
+        while(itr.hasNext())
+        {
+            Customer customer = (Customer) itr.next();
+            if (customer != null) {
+                System.out.println(toString(customer));
+            }
+
         }
 
     }

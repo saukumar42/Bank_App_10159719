@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class SBI implements RBII{
     final double minBalance=8000;
@@ -24,7 +25,7 @@ public class SBI implements RBII{
         if(buff==null)
             buff = new BufferedReader(isr);
     }
-    public void createBankAccount()
+    public void createBankAccount(HashSet<Customer> customersAuthenticated)
     {
 
         Customer cust=new Customer("SBI");
@@ -36,7 +37,8 @@ public class SBI implements RBII{
         }
 
         accountsMap.put(cust.getAccountNumber(),cust);
-        System.out.println("Your Axis bank account has been successfull created");
+        System.out.println("Your Axis bank account has been successfully created");
+        customersAuthenticated.add(cust);
     }
     public void depositMoney(Customer c) {
         System.out.println("Enter the amount to be deposited");
